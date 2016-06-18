@@ -91,12 +91,12 @@ class Agent:
 				batch = self.memory.get_batch(model=model, batch_size=batch_size, gamma=gamma)
 				if batch:
 					inputs, targets = batch
-					loss += float(model.train_on_batch(inputs, targets))
+					loss += np.array(model.train_on_batch(inputs, targets),dtype=float)
 			if game.is_won():
 				win_count += 1
 			if epsilon > final_epsilon:
 				epsilon -= delta
-			print("Epoch {:03d}/{:03d} | Loss {:.4f} | Epsilon {:.2f} | Win count {}".format(epoch + 1, nb_epoch, loss, epsilon, win_count))
+			print("Epoch {:03d}/{:03d} | Loss {} | Epsilon {:.2f} | Win count {}".format(epoch + 1, nb_epoch, loss, epsilon, win_count))
 
 	def play(self, game, nb_epoch=10, epsilon=0., visualize=True):
 		self.check_game_compatibility(game)
